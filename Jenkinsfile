@@ -49,6 +49,7 @@ pipeline {
             steps {
                 junit '**/target/surefire-reports/TEST-*.xml'
                 archiveArtifacts 'target/*.jar'
+                step( [ $class: 'JacocoPublisher' ] )
             }
         }
         stage("clear") {
