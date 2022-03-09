@@ -9,7 +9,14 @@ pipeline {
         stage('build') {
             steps {
                 sh '''
-                mvn clean dependency:copy-dependencies package shade:shade test
+                mvn clean dependency:copy-dependencies package shade:shade
+                '''
+            }
+        }
+        stage('test') {
+            steps {
+                sh '''
+                mvn clean test
                 '''
             }
         }
@@ -31,7 +38,7 @@ pipeline {
                      transfers: [
                       sshTransfer(
                        sourceFiles: "*.html",
-                       remoteDirectory: "/var/www/html"
+                       remoteDirectory: "/"
                       )
                      ])
                    ]
