@@ -16,7 +16,7 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                mvn surefire:test surefire-report:report
+                mvn test surefire-report:report
                 '''
             }
         }
@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Results') {
             steps {
-                junit '**/target/site/TEST-*.xml'
+                junit '**/target/surefire-reports/TEST-*.xml'
                 archiveArtifacts 'target/*.jar'
             }
         }
