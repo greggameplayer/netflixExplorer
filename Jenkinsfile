@@ -45,6 +45,13 @@ pipeline {
                 )
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('My SonarQube Server') {
+                sh "mvn verify sonar:sonar"
+                }
+            }
+        }
         stage('Results') {
             steps {
                 junit '**/target/surefire-reports/TEST-*.xml'
