@@ -52,17 +52,18 @@ pipeline {
                 }
             }
         }
-        stage('Results') {
-            steps {
-                junit '**/target/surefire-reports/TEST-*.xml'
-                archiveArtifacts 'target/*.jar'
-                step( [ $class: 'JacocoPublisher' ] )
-            }
+    }
+
+    post {
+        success {
+            junit '**/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts 'target/*.jar'
+            step( [ $class: 'JacocoPublisher' ] )
+            step( [ $class: 'SonarQubePublisher' ] )
         }
-        stage("clear") {
-            steps {
-                cleanWs deleteDirs: true
-            }
+
+        always {
+            cleanWs deleteDirs: true
         }
     }
 }
