@@ -59,10 +59,8 @@ pipeline {
             junit '**/target/surefire-reports/TEST-*.xml'
             archiveArtifacts 'target/*.jar'
             step( [ $class: 'JacocoPublisher' ] )
-            step( [ $class: 'SonarQubePublisher' ] )
         }
-
-        always {
+        cleanup {
             cleanWs deleteDirs: true
         }
     }
