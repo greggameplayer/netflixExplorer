@@ -47,7 +47,7 @@ pipeline {
                       transfers: [
                        sshTransfer(
                         sourceFiles: "*.html",
-                        remoteDirectory: "/home/jenkins/epsi/gregoire_hage/"
+                        remoteDirectory: "/"
                        )
                       ])
                    ]
