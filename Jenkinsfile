@@ -9,7 +9,7 @@ pipeline {
         stage('build') {
             steps {
                 sh '''
-                mvn clean dependency:copy-dependencies package shade:shade
+                mvn clean dependency:copy-dependencies package shade:shade -DskipTests
                 '''
             }
         }
@@ -40,7 +40,16 @@ pipeline {
                        sourceFiles: "*.html",
                        remoteDirectory: "/"
                       )
-                     ])
+                     ]),
+                     sshPublisherDesc(
+                      configName: "nicolas_server",
+                      verbose: true,
+                      transfers: [
+                       sshTransfer(
+                        sourceFiles: "*.html",
+                        remoteDirectory: "/home/jenkins/epsi/gregoire_hage/"
+                       )
+                      ])
                    ]
                 )
             }
